@@ -8,6 +8,8 @@ import {
   InternalServerErrorException,
   ParseArrayPipe,
   UsePipes,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
@@ -16,6 +18,15 @@ import { ProductDto } from './dto/productDto';
 import { JoiValidationPipe } from '../pipes/joiValidation.pipe';
 import { productSchema } from './schema/product.schema';
 import { ProductsValidationPipe } from '../pipes/productsValidation.pipe';
+import { Transform } from 'class-transformer';
+import { IsArray, IsString } from 'class-validator';
+
+export class IdFilter {
+  @IsArray()
+  @IsString({ each: true })
+  @Transform(({ value }) => value.split('&'))
+  productIds?: string[];
+}
 
 @ApiTags('products')
 @Controller('products')
@@ -28,7 +39,11 @@ export class ProductsController {
   @Post()
   @UsePipes(new JoiValidationPipe(productSchema))
   async create(@Body() product: Product) {
-    return this.productsService.create(product);
+    try {
+      return this.productsService.create(product);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
   }
 
   @ApiResponse({
@@ -46,11 +61,38 @@ export class ProductsController {
   @ApiOperation({
     summary: 'Find all matching products',
   })
-  @Get()
+  @Get('/search')
   @Header('Content-Type', 'application/json')
-  async findAll(@Body('productIds', ParseArrayPipe) productIds: string[]) {
+  async search(
+    @Query(new ValidationPipe({ transform: true })) productIds: IdFilter,
+  ) {
     try {
-      return this.productsService.findAll(productIds);
+      return this.productsService.search(productIds.productIds);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'Found products successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request Body',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Service Error',
+  })
+  @ApiOperation({
+    summary: 'Find all products',
+  })
+  @Get('')
+  @Header('Content-Type', 'application/json')
+  async findAll() {
+    try {
+      return this.productsService.findAll();
     } catch (e) {
       throw new InternalServerErrorException(e);
     }

@@ -11,7 +11,7 @@ export class ProductsValidationPipe {
     // Check to see if its an array first
     if (Array.isArray(value) && value.length > 0) {
       for (let i = 0; i < value.length; i++) {
-        const { error } = this.schema.validate(value);
+        const { error } = this.schema.validate(value[i]);
         if (error) {
           throw new BadRequestException('Validation failed');
         }

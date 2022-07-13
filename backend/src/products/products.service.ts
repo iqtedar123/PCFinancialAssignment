@@ -10,9 +10,10 @@ export class ProductsService {
     // Add product to product list
     products.push(product);
     await this.updateStorage(products);
+    return true;
   }
 
-  async findAll(productIds: string[]) {
+  async search(productIds: string[]) {
     const products = await this.getData();
     // Return non deleted products
     return products
@@ -21,6 +22,12 @@ export class ProductsService {
             !product.isDeleted && productIds.includes(product.productId),
         )
       : [];
+  }
+
+  async findAll() {
+    const products = await this.getData();
+    // Return non deleted products
+    return products ? products?.filter((product) => !product.isDeleted) : [];
   }
 
   async upsert(products: Product[]) {
@@ -64,7 +71,7 @@ export class ProductsService {
 
     await this.updateStorage(newProducts);
 
-    return newProducts;
+    return true;
   }
 
   async getData(): Promise<Product[] | undefined> {

@@ -111,7 +111,7 @@ describe('ProductsService', () => {
         getFileSpy.mockResolvedValue(
           JSON.stringify({ products: productsInFile }),
         );
-        const result = await service.findAll(productIds);
+        const result = await service.search(productIds);
         expect(result).toEqual(expected);
         expect(getFileSpy).toHaveBeenCalledWith(
           `${DATA_PATH}/${PRODUCT_FILENAME}`,
