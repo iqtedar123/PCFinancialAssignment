@@ -8,7 +8,11 @@ export const DATA_PATH = './data';
 export class AppService implements OnModuleInit {
   async onModuleInit() {
     try {
-      await StorageService.createOrUpdateFile(DATA_PATH, PRODUCT_FILENAME);
+      await StorageService.createOrUpdateFile(
+        DATA_PATH,
+        PRODUCT_FILENAME,
+        '{}',
+      );
     } catch (e) {
       console.error('Error creating Products file', e);
     }

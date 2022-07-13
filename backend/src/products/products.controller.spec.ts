@@ -1,4 +1,3 @@
-import { BadRequestException } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { ProductsController } from './products.controller';
 import * as ProductsService from './products.service';
@@ -36,25 +35,25 @@ describe('ProductsController', () => {
 
   describe('findAll', () => {
     it('calls findAll with provided products', async () => {
-      controller.findAll({ productIds: [product.productId] });
+      controller.findAll([product.productId]);
       expect(findAllSpy).toHaveBeenCalledWith([product.productId]);
     });
     it('handles error when input is invalid', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore deliberate invalid data
-      await expect(controller.findAll({})).rejects.toThrow(BadRequestException);
+      await expect(controller.findAll()).rejects.toThrow(TypeError);
     });
   });
 
   describe('delete', () => {
     it('calls delete with provided products', async () => {
-      controller.delete({ productIds: [product.productId] });
+      controller.delete([product.productId]);
       expect(deleteSpy).toHaveBeenCalledWith([product.productId]);
     });
     it('handles error when input is invalid', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore deliberate invalid data
-      await expect(controller.delete({})).rejects.toThrow(BadRequestException);
+      await expect(controller.delete()).rejects.toThrow(TypeError);
     });
   });
 

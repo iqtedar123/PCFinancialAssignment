@@ -5,14 +5,17 @@ import {
   Body,
   Delete,
   Header,
-  BadRequestException,
   InternalServerErrorException,
+  ParseArrayPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
-import { ProductIdsDto } from './dto/productIdsDto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProductDto } from './dto/productDto';
+import { JoiValidationPipe } from '../pipes/joiValidation.pipe';
+import { productSchema } from './schema/product.schema';
+import { ProductsValidationPipe } from '../pipes/productsValidation.pipe';
 
 @ApiTags('products')
 @Controller('products')
@@ -23,6 +26,7 @@ export class ProductsController {
     summary: 'Create a new product',
   })
   @Post()
+  @UsePipes(new JoiValidationPipe(productSchema))
   async create(@Body() product: Product) {
     return this.productsService.create(product);
   }
@@ -44,12 +48,9 @@ export class ProductsController {
   })
   @Get()
   @Header('Content-Type', 'application/json')
-  async findAll(@Body() body: ProductIdsDto) {
-    if (!body?.productIds) {
-      throw new BadRequestException('Invalid body');
-    }
+  async findAll(@Body('productIds', ParseArrayPipe) productIds: string[]) {
     try {
-      return this.productsService.findAll(body?.productIds);
+      return this.productsService.findAll(productIds);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
@@ -72,12 +73,9 @@ export class ProductsController {
   })
   @Delete()
   @Header('Content-Type', 'application/json')
-  async delete(@Body() body: ProductIdsDto) {
-    if (!body?.productIds) {
-      throw new BadRequestException();
-    }
+  async delete(@Body('productIds', ParseArrayPipe) productIds: string[]) {
     try {
-      return this.productsService.delete(body?.productIds);
+      return this.productsService.delete(productIds);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
@@ -101,6 +99,7 @@ export class ProductsController {
   })
   @Post('/upsert')
   @Header('Content-Type', 'application/json')
+  @UsePipes(new ProductsValidationPipe(productSchema))
   async upsert(@Body() products: ProductDto[]) {
     try {
       return this.productsService.upsert(products);
