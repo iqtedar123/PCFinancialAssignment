@@ -2,6 +2,7 @@
 
 Backend for Store Admin. It uses NestJS (Express) located in `/backend`.
 It stores products in `.json` file that has some mock data on server startup.
+[Swagger located here](http://localhost:3000/api)
 
 ## Installation
 
