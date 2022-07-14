@@ -22,7 +22,7 @@ describe("IconButton", () => {
 
   it("handles onClick", () => {
     render(<IconButton {...props} />);
-    const element = screen.getByTestId("button");
+    const element = screen.getByTestId("button-label");
     fireEvent.click(element);
     expect(onClick).toHaveBeenCalled();
   });

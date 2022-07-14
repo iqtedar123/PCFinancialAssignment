@@ -24,7 +24,7 @@ const styles = {
 };
 
 interface Props {
-  renderContent: () => EmotionJSX.Element;
+  renderContent: () => EmotionJSX.Element | null;
   renderHeader: () => EmotionJSX.Element;
 }
 

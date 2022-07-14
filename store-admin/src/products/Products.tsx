@@ -13,6 +13,10 @@ const Products = () => {
     setProducts(products ?? []);
   }, []);
 
+  useEffect(() => {
+    fetchProducts().catch(console.error);
+  }, [fetchProducts]);
+
   const renderContent = React.useCallback(
     () =>
       products.length > 0 ? (
@@ -25,21 +29,16 @@ const Products = () => {
             />
           ))}
         </>
-      ) : (
-        <></>
-      ),
+      ) : null,
     [products, fetchProducts]
   );
-  useEffect(() => {
-    fetchProducts().catch(console.error);
-  }, [fetchProducts]);
+
+  const renderHeader = React.useCallback(
+    () => <ProductsHeader products={products} fetchProducts={fetchProducts} />,
+    [products, fetchProducts]
+  );
   return (
-    <ProductsLayout
-      renderContent={renderContent}
-      renderHeader={() => (
-        <ProductsHeader products={products} fetchProducts={fetchProducts} />
-      )}
-    />
+    <ProductsLayout renderContent={renderContent} renderHeader={renderHeader} />
   );
 };
 

@@ -25,13 +25,13 @@ interface Props {
   icon: any;
 }
 
-const IconButton = ({ onClick, disabled, icon }: Props) => {
+const IconButton = ({ onClick, disabled, icon, label }: Props) => {
   return (
     <button
       css={styles.button}
       onClick={onClick}
       disabled={disabled}
-      data-testid="button"
+      data-testid={`button-${label}`}
     >
       {icon}
     </button>
