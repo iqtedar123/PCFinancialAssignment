@@ -232,7 +232,7 @@ describe('ProductsService', () => {
         JSON.stringify({ products: productsInFile }),
       );
       const result = await service.delete(productIds);
-      expect(result).toEqual(expected);
+      expect(result).toEqual(true);
       expect(getFileSpy).toHaveBeenCalledWith(
         `${DATA_PATH}/${PRODUCT_FILENAME}`,
       );
@@ -262,7 +262,7 @@ describe('ProductsService', () => {
         JSON.stringify({ products: productsInFile }),
       );
       const result = await service.delete(productIds);
-      expect(result).toEqual(expected);
+      expect(result).toEqual(true);
       expect(getFileSpy).toHaveBeenCalledWith(
         `${DATA_PATH}/${PRODUCT_FILENAME}`,
       );

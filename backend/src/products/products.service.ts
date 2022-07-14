@@ -61,7 +61,7 @@ export class ProductsService {
   async delete(productIds: string[]) {
     const allProducts = await this.getData();
     if (allProducts.length === 0 || productIds.length === 0) {
-      return allProducts;
+      return true;
     }
     // Delete existing product
     const newProducts = allProducts.map((product) => ({

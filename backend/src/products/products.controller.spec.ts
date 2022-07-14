@@ -1,3 +1,4 @@
+import { InternalServerErrorException } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { ProductsController } from './products.controller';
 import * as ProductsService from './products.service';
@@ -8,7 +9,7 @@ const product: Product = {
   price: 10,
 };
 
-let createSpy, findAllSpy, deleteSpy, upsertSpy;
+let createSpy, findAllSpy, deleteSpy, upsertSpy, searchSpy;
 
 describe('ProductsController', () => {
   let controller: ProductsController;
@@ -20,6 +21,7 @@ describe('ProductsController', () => {
     findAllSpy = jest.spyOn(productsService, 'findAll');
     deleteSpy = jest.spyOn(productsService, 'delete');
     upsertSpy = jest.spyOn(productsService, 'upsert');
+    searchSpy = jest.spyOn(productsService, 'search');
   });
 
   it('should be defined', () => {
@@ -35,13 +37,22 @@ describe('ProductsController', () => {
 
   describe('findAll', () => {
     it('calls findAll with provided products', async () => {
-      controller.findAll([product.productId]);
-      expect(findAllSpy).toHaveBeenCalledWith([product.productId]);
+      controller.findAll();
+      expect(findAllSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('Search', () => {
+    it('calls Search with provided products', async () => {
+      controller.search({ productIds: [product.productId] });
+      expect(searchSpy).toHaveBeenCalled();
     });
     it('handles error when input is invalid', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore deliberate invalid data
-      await expect(controller.findAll()).rejects.toThrow(TypeError);
+      await expect(controller.search()).rejects.toThrow(
+        InternalServerErrorException,
+      );
     });
   });
 
