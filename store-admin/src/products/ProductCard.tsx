@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import ProductCardLayout from "./ProductCardLayout";
 import ProductCardDetails from "./ProductCardDetails";
 import { useCallback } from "react";
+import React from "react";
+import { notify, ToastType } from "../shared/Toast";
 
 interface Props extends Product {
   fetchProducts: () => void;
@@ -26,10 +28,11 @@ const ProductCard = ({
   const deleteItem = useCallback(async () => {
     const response = await deleteProduct([productId]);
     await fetchProducts();
-    alert(
+    notify(
       response
         ? `Deleted item with productId: ${productId}`
-        : "Error deleting, try again."
+        : "Error deleting, try again.",
+      response ? ToastType.success : ToastType.errror
     );
   }, [productId, fetchProducts]);
 

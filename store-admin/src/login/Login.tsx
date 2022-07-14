@@ -3,6 +3,7 @@ import Input from "../shared/Input";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import Form from "../shared/Form";
+import { notify, ToastType } from "../shared/Toast";
 
 interface StateType {
   from: { pathname: string };
@@ -12,7 +13,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAuth();
-
   const from = (location.state as StateType)?.from?.pathname || "/";
 
   const [username, setUsername] = useState("");
@@ -22,9 +22,11 @@ const Login = () => {
     if (success) {
       // Maybe show a toast here?
       navigate(from, { replace: true });
+      notify("Welcome to Store Admin.", ToastType.success);
     } else {
       // Maybe show a toast here?
       console.log("Error");
+      notify("Error logging in. Try again later.", ToastType.errror);
     }
   };
 

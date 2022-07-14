@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "./api";
+import { notify, ToastType } from "./Toast";
 
 const styles = {
   header: css({
@@ -67,6 +68,7 @@ const Header = () => {
     // Perform logout
     await logout();
     navigate("/login");
+    notify("Logged out!", ToastType.success);
   };
   return (
     <>

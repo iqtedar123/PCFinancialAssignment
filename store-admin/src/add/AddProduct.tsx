@@ -4,6 +4,7 @@ import { addProduct } from "../shared/api";
 import { onInputChange } from "../shared/constants";
 import Form from "../shared/Form";
 import Input from "../shared/Input";
+import { notify, ToastType } from "../shared/Toast";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -23,9 +24,12 @@ const AddProduct = () => {
       productName,
       price: Number(price),
     });
-    alert(response ? "New Product Created" : "Error, try again.");
     // Navigate to home
     navigate("/");
+    notify(
+      response ? "New Product Created" : "Error, try again.",
+      response ? ToastType.success : ToastType.errror
+    );
   };
 
   return (

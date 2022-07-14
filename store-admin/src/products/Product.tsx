@@ -7,6 +7,7 @@ import { getProduct, updateProduct } from "../shared/api";
 import IconButton from "../shared/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { notify, ToastType } from "../shared/Toast";
 
 export interface ProductPageProps {
   editable?: boolean;
@@ -34,11 +35,12 @@ const Product = ({ editable = false }: ProductPageProps) => {
     if (product) {
       const response = await updateProduct(product);
       if (response) {
-        alert("Updated");
         navigate("/");
-      } else {
-        alert("Error saving. Try again.");
       }
+      notify(
+        response ? "Updated product" : "Error saving. Try again.",
+        response ? ToastType.success : ToastType.errror
+      );
     }
   }, [product, navigate]);
 

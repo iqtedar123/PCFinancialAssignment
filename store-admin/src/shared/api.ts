@@ -103,18 +103,22 @@ export const login = async ({
   username: string;
   password: string;
 }) => {
-  const response = await fetch(`${API_ENDPOINT}/auth/login`, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-  const { token, success } = await response.json();
-  saveJWTInCookie({ token });
+  try {
+    const response = await fetch(`${API_ENDPOINT}/auth/login`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    const { token, success } = await response.json();
+    saveJWTInCookie({ token });
 
-  return success;
+    return success;
+  } catch (e) {
+    return false;
+  }
 };
 
 export const logout = async () => {

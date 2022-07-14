@@ -18,7 +18,6 @@ const props = {
   fetchProducts,
 };
 
-jest.spyOn(window, "alert").mockImplementation(() => {});
 describe("ProductCard", () => {
   it("handles edit", () => {
     const render = () => renderWithRouter(() => <ProductCard {...props} />);

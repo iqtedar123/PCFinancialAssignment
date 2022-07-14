@@ -1,7 +1,7 @@
 # Introduction
 
 This is a store admin app. It allows authenticated users to add/remove/edit/delete products.
-It uses React, Emotion and FontAwesome.
+It uses React, Emotion, Toastify and FontAwesome.
 
 ## Running
 

@@ -9,6 +9,7 @@ import Home from "./home/Home";
 import AddPage from "./add/AddPage";
 import Loading from "./shared/Loading";
 import ProductDetailPage from "./products/ProductDetailPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
+      <ToastContainer />
     </Suspense>
   );
 }
