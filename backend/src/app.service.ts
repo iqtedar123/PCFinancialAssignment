@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as StorageService from './storageService';
+import * as mockProducts from './data/mockProducts.json';
 
 export const PRODUCT_FILENAME = 'products.json';
 export const DATA_PATH = './data';
@@ -11,7 +12,7 @@ export class AppService implements OnModuleInit {
       await StorageService.createOrUpdateFile(
         DATA_PATH,
         PRODUCT_FILENAME,
-        '{}',
+        JSON.stringify(mockProducts),
       );
     } catch (e) {
       console.error('Error creating Products file', e);

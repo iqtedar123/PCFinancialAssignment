@@ -1,0 +1,54 @@
+{
+  "products": [
+    {
+      "productId": "933458fa-adb7-559e-81eb-1c5ff21e568d",
+      "productName": "Mouse",
+      "price": 100
+    },
+    {
+      "productId": "2103099d-1241-5cee-9523-7f87252e50e7",
+      "productName": "Keyboard",
+      "price": 5234
+    },
+    {
+      "productId": "fa64f06c-c9b2-57bc-b02b-83b4bf159e54",
+      "productName": "Laptop",
+      "price": 45
+    },
+    {
+      "productId": "6f070b5e-7e1e-5380-b5a4-422b2d414e2f",
+      "productName": "Car",
+      "price": 243
+    },
+    {
+      "productId": "8bbbb48d-9680-5a36-9ee8-95209c9d136d",
+      "productName": "Apple",
+      "price": 312
+    },
+    {
+      "productId": "f2afe393-dbb6-58fc-bfee-05987a7e8ef7",
+      "productName": "Banana",
+      "price": 73
+    },
+    {
+      "productId": "bc7f1b56-abcf-523c-96c8-6b2e3acd657c",
+      "productName": "Watch",
+      "price": 5
+    },
+    {
+      "productId": "c12d5673-6e9d-58b9-ab8b-d5ed7b9218b8",
+      "productName": "Phone",
+      "price": 12
+    },
+    {
+      "productId": "965a7d32-3033-5ae5-ad6e-ddd3e83bb06b",
+      "productName": "Doorbell",
+      "price": 50
+    },
+    {
+      "productId": "89d7fe77-ab17-57f2-be94-b3fbca75ed41",
+      "productName": "Toy",
+      "price": 50
+    }
+  ]
+}

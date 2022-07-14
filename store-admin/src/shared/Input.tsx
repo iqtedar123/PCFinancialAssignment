@@ -34,6 +34,7 @@ const styles = {
     },
   }),
 };
+
 const Input = ({
   value,
   onChange,
@@ -53,9 +54,10 @@ const Input = ({
           type={type}
           value={value}
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={!readOnly ? onChange : undefined}
           required={required}
           readOnly={readOnly}
+          data-testid="input"
         />
       </div>
     </div>

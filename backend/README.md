@@ -1,7 +1,7 @@
 # Description
 
 Backend for Store Admin. It uses NestJS (Express) located in `/backend`.
-It stores products in `.json` file that is empty on server startup.
+It stores products in `.json` file that has some mock data on server startup.
 
 ## Installation
 

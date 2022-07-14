@@ -70,14 +70,18 @@ const Header = () => {
   };
   return (
     <>
-      <header css={styles.header}>
+      <header css={styles.header} data-testid="header">
         <nav css={styles.nav}>
-          <a href="/" css={styles.link}>
+          <a href="/" css={styles.link} data-testid="home">
             Home
           </a>
         </nav>
         <div css={styles.logoutWrapper}>
-          <button onClick={onLogoutClick} css={[styles.link, styles.logout]}>
+          <button
+            onClick={onLogoutClick}
+            css={[styles.link, styles.logout]}
+            data-testid="logout"
+          >
             Logout
           </button>
         </div>

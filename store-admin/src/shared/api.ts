@@ -20,7 +20,7 @@ export const doGet = async (path: string) => {
   return responseJSON;
 };
 
-export const doPost = async (path: string, data: Record<string, unknown>) => {
+export const doPost = async (path: string, data: any) => {
   const jwtToken = getCookie("jwt-cookie");
   const response = await fetch(`${API_ENDPOINT}${path}`, {
     method: "POST",
@@ -88,6 +88,11 @@ export const addProduct = async (product: Product) => {
 
 export const deleteProduct = async (productIds: string[]) => {
   const response = await doDelete("/products", { productIds });
+  return response;
+};
+
+export const updateProduct = async (product: Product) => {
+  const response = await doPost("/products/upsert", [product]);
   return response;
 };
 

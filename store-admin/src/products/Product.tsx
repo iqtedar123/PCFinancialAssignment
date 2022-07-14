@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Form from "../shared/Form";
 import Input from "../shared/Input";
 import { Product as ProductType } from "../shared/constants";
-import { getProduct } from "../shared/api";
+import { getProduct, updateProduct } from "../shared/api";
 import IconButton from "../shared/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -13,6 +13,7 @@ export interface ProductPageProps {
 }
 
 const Product = ({ editable = false }: ProductPageProps) => {
+  const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(editable);
   const [product, setProduct] = useState<ProductType>();
   const { id } = useParams();
@@ -28,7 +29,18 @@ const Product = ({ editable = false }: ProductPageProps) => {
     fetchProduct().catch(console.error);
   }, [fetchProduct]);
 
-  const onSubmit = () => {};
+  const onSubmit = React.useCallback(async () => {
+    // Update product
+    if (product) {
+      const response = await updateProduct(product);
+      if (response) {
+        alert("Updated");
+        navigate("/");
+      } else {
+        alert("Error saving. Try again.");
+      }
+    }
+  }, [product, navigate]);
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -43,6 +55,7 @@ const Product = ({ editable = false }: ProductPageProps) => {
     }
   };
 
+  // ID is always readOnly
   return (
     <Form onSubmit={onSubmit} submitLabel="Save" readOnly={!isEditable}>
       {!editable && (
@@ -59,7 +72,7 @@ const Product = ({ editable = false }: ProductPageProps) => {
         placeholder={"7777"}
         label={"Product Id"}
         required
-        readOnly={!isEditable}
+        readOnly={true}
         onChange={(e) => onChange(e, "productId")}
       />
       <Input
