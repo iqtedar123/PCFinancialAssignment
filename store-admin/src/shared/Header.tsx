@@ -25,6 +25,7 @@ const styles = {
     padding: 8,
     marginRight: "auto",
     height: "100%",
+    fontWeight: 500,
     "&::after": {
       content: `''`,
       transition: `opacity 125 ease-in-out`,
@@ -52,7 +53,10 @@ const styles = {
     },
   }),
   logout: css({
-    all: "unset",
+    border: "none",
+    background: "none",
+    fontSize: "inherit",
+    fontWeight: 500,
   }),
   logoutWrapper: css({
     marginLeft: "auto",

@@ -13,15 +13,13 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   }),
-  icon: css({
-    width: 16,
-    height: 16,
-  }),
   actions: css({
     display: "flex",
-
     gap: 30,
     marginBottom: 8,
+  }),
+  h1: css({
+    color: "#3e4684",
   }),
 };
 
@@ -39,22 +37,18 @@ const ProductsHeader = ({
   };
   return (
     <div css={styles.wrapper}>
-      <h1>{products.length} products</h1>
+      <h1 css={styles.h1}>{products.length} products</h1>
       <div css={styles.actions}>
-        <div css={styles.icon}>
-          <IconButton
-            label={"Add Product"}
-            onClick={addProduct}
-            icon={<FontAwesomeIcon icon={solid("plus")} />}
-          />
-        </div>
-        <div css={styles.icon}>
-          <IconButton
-            label={"Refresh"}
-            onClick={fetchProducts}
-            icon={<FontAwesomeIcon icon={solid("refresh")} />}
-          />
-        </div>
+        <IconButton
+          label={"Add Product"}
+          onClick={addProduct}
+          icon={<FontAwesomeIcon icon={solid("plus")} />}
+        />
+        <IconButton
+          label={"Refresh"}
+          onClick={fetchProducts}
+          icon={<FontAwesomeIcon icon={solid("refresh")} />}
+        />
       </div>
     </div>
   );

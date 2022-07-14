@@ -8,6 +8,7 @@ import IconButton from "../shared/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { notify, ToastType } from "../shared/Toast";
+import PageLayout from "../shared/PageLayout";
 
 export interface ProductPageProps {
   editable?: boolean;
@@ -24,7 +25,7 @@ const Product = ({ editable = false }: ProductPageProps) => {
       const product = await getProduct(id);
       setProduct(product ?? undefined);
     }
-  }, [id]);
+  }, [id, setProduct]);
 
   useEffect(() => {
     fetchProduct().catch(console.error);
@@ -59,43 +60,48 @@ const Product = ({ editable = false }: ProductPageProps) => {
 
   // ID is always readOnly
   return (
-    <Form onSubmit={onSubmit} submitLabel="Save" readOnly={!isEditable}>
-      {!editable && (
-        <IconButton
-          label={"Edit"}
-          onClick={() => setIsEditable(!isEditable)}
-          icon={<FontAwesomeIcon icon={solid("pen")} />}
-        />
+    <PageLayout
+      header={product ? `${product?.productName}` : ""}
+      renderContent={() => (
+        <Form onSubmit={onSubmit} submitLabel="Save" readOnly={!isEditable}>
+          {!editable && (
+            <IconButton
+              label={"Edit"}
+              onClick={() => setIsEditable(!isEditable)}
+              icon={<FontAwesomeIcon icon={solid("pen")} />}
+            />
+          )}
+          <Input
+            name="productId"
+            type="text"
+            value={product?.productId || ""}
+            placeholder={"7777"}
+            label={"Product Id"}
+            required
+            readOnly={true}
+            onChange={(e) => onChange(e, "productId")}
+          />
+          <Input
+            name="productName"
+            type="text"
+            value={product?.productName || ""}
+            required
+            label={"Product Name"}
+            readOnly={!isEditable}
+            onChange={(e) => onChange(e, "productName")}
+          />
+          <Input
+            name="price"
+            type="number"
+            value={product?.price ? (product?.price as unknown as string) : ""}
+            required
+            label={"Price"}
+            readOnly={!isEditable}
+            onChange={(e) => onChange(e, "price")}
+          />
+        </Form>
       )}
-      <Input
-        name="productId"
-        type="text"
-        value={product?.productId || ""}
-        placeholder={"7777"}
-        label={"Product Id"}
-        required
-        readOnly={true}
-        onChange={(e) => onChange(e, "productId")}
-      />
-      <Input
-        name="productName"
-        type="text"
-        value={product?.productName || ""}
-        required
-        label={"Product Name"}
-        readOnly={!isEditable}
-        onChange={(e) => onChange(e, "productName")}
-      />
-      <Input
-        name="price"
-        type="number"
-        value={product?.price ? (product?.price as unknown as string) : ""}
-        required
-        label={"Price"}
-        readOnly={!isEditable}
-        onChange={(e) => onChange(e, "price")}
-      />
-    </Form>
+    />
   );
 };
 

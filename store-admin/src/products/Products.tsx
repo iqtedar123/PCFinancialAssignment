@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getProducts } from "../shared/api";
 import { Product } from "../shared/constants";
+import Loading from "../shared/Loading";
+import { notify, ToastType } from "../shared/Toast";
 import ProductCard from "./ProductCard";
 import ProductsHeader from "./ProductsHeader";
 import ProductsLayout from "./ProductsLayout";
@@ -14,7 +16,9 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    fetchProducts().catch(console.error);
+    fetchProducts().catch(() =>
+      notify("Error fetching products. Try again later.", ToastType.errror)
+    );
   }, [fetchProducts]);
 
   const renderContent = React.useCallback(
@@ -29,7 +33,9 @@ const Products = () => {
             />
           ))}
         </>
-      ) : null,
+      ) : (
+        <Loading />
+      ),
     [products, fetchProducts]
   );
 

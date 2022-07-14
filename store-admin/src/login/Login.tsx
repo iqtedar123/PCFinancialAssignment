@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import Form from "../shared/Form";
 import { notify, ToastType } from "../shared/Toast";
+import PageLayout from "../shared/PageLayout";
 
 interface StateType {
   from: { pathname: string };
@@ -36,29 +37,34 @@ const Login = () => {
     setPassword(e.target.value);
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      disabled={username.length === 0 || password.length === 0}
-      submitLabel="Login"
-    >
-      <Input
-        name="username"
-        type="text"
-        value={username}
-        placeholder={"John Doe"}
-        label={"Username"}
-        onChange={onUsernameChange}
-        required
-      />
-      <Input
-        name="password"
-        type="password"
-        value={password}
-        onChange={onPasswordChange}
-        required
-        label={"Password"}
-      />
-    </Form>
+    <PageLayout
+      header={"Please check README for credentials."}
+      renderContent={() => (
+        <Form
+          onSubmit={onSubmit}
+          disabled={username.length === 0 || password.length === 0}
+          submitLabel="Login"
+        >
+          <Input
+            name="username"
+            type="text"
+            value={username}
+            placeholder={"John Doe"}
+            label={"Username"}
+            onChange={onUsernameChange}
+            required
+          />
+          <Input
+            name="password"
+            type="password"
+            value={password}
+            onChange={onPasswordChange}
+            required
+            label={"Password"}
+          />
+        </Form>
+      )}
+    />
   );
 };
 
